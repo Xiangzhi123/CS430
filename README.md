@@ -1,5 +1,4 @@
-# CS430_Project1
-# This is a short description of project 1 for CS 430
+# CS430 Project1
 # My application should be able to read both P3 and P6 formatted images into memory.
 # Also, Writing to P3 and P6 formatted images from memory should be working on my program.
 # Thus, converting from P3/P6 to P3 and P3/P6 to P6 are my project expections.
