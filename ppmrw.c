@@ -8,6 +8,7 @@ typedef struct PPMRGBpixel {
 	unsigned char b;
 } PPMRGBpixel;
 
+// create struct that represents a single image
 typedef struct PPMimage {
 	int width;
 	int height;
@@ -15,25 +16,33 @@ typedef struct PPMimage {
 	unsigned char *data;
 } PPMimage;
 
+// the buffer is used to store image data and some header data from ppm file
+// so that we could use the data from buffer when we write into output file
 PPMimage *buffer;
 
 PPMimage PPMRead(char *inputFilename);
 int PPMWrite(char *outPPMVersion, char *outputFilename);
 int PPMDataWrite(char ppmVersionNum, FILE *outputFile);
 
+// the PPMRead function is used to read data from ppm file
 PPMimage PPMRead(char *inputFilename) {
+        // allocate the memory for buffer
 	buffer = (PPMimage*)malloc(sizeof(PPMimage));
 	FILE* fh = fopen(inputFilename, "rb");
+        // check whether the file open successfully. If not, show the error message
 	if (fh == NULL) {
 		fprintf(stderr, "Error: open the file unsuccessfully. \n");
 		exit(1);
 	}
 	int c = fgetc(fh);            // get the first character of the file
+        // check the file type, if the file does not start with the 'P'
+        // then the file is not a ppm file, and show th error message
 	if (c != 'P') {
 		fprintf(stderr, "Error: incorrect input file formart, the file should be a PPM file. \n");
 		exit(1);
 	}
 	c = fgetc(fh);              // get the second character of the file, which should be a number with char type
+        // save the ppm version number as a char
 	char ppmVersionNum = c;
 	if (ppmVersionNum != '3' && ppmVersionNum != '6') {
 		fprintf(stderr, "Error: invalid magic number, the ppm version should be either P3 or P6. \n");
